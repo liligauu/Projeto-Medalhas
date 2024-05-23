@@ -31,9 +31,9 @@ void LeString(char string[], int tamanho){
 
 int main(){
 
-    FILE* arq1
+    FILE* arq1;
 
-    FILE* arq1 = fopen("../medalhas.csv", "r");
+    arq1 = fopen("../medalhas.csv", "r");
     if(arq1 == NULL){
         perror("Erro ao abrir arquivo!\n");
         exit(1);
