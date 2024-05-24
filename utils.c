@@ -45,3 +45,18 @@ void OrdenaporCrescente(int numeros[], int tamanhovetor) {
         } // FOR 
     } // FOR 
 } // ORDENAR QUALQUER VETOR EM ORDEM CRESCENTE
+
+long getFileSize(const char *filename) {
+    FILE *arquivo = fopen(filename, "r");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir arquivo!");
+        exit(1);
+    }
+
+    fseek(arquivo, 0, SEEK_END); // PULA PARA O FIM DO ARQUIVO
+    long tamanho = ftell(arquivo); // LÊ O INDICADOR DE POSIÇÃO(EM BYTES);
+
+    fclose(arquivo);
+
+    return tamanho;
+}

@@ -11,4 +11,7 @@ void LimpaTela();
 void OrdenaporDecrescente(int numeros[], int tamanhovetor);
 void OrdenaporCrescente(int numeros[], int tamanhovetor);
 
-#endif
+// Funções de Manipulação de Arquivos
+long getFileSize(const char *filename);
+
+#endif //UTILS.H

@@ -26,17 +26,47 @@ typedef struct
 
 int main(){
 
-    FILE *arq1;
+    FILE *medalhasFile;
+    FILE *medalhasCSV;
 
-    arq1 = fopen("medalhas.bin", "rb+");
-    if (arq1 == NULL){
-        perror("Erro ao abrir arquivo");
-        exit(1);
+    medalhasFile = fopen("medalhas.bin", "rb");
+    if (medalhasFile == NULL){
+        perror("Erro ao abrir arquivo binário para leitura!\n");
+
+        medalhasCSV = fopen("medalhas.csv", "r");
+        if(medalhasCSV == NULL){
+            perror("Erro ao abrir arquivo \"medalhas.csv\" para leitura\n");
+            exit(1);
+        }
+
+        medalhasFile = fopen("medalhas.bin", "wb");
+        if(medalhasFile == NULL){
+            perror("Erro ao criar arquivo binário \"medalhas.bin\" !\n");
+            exit(1);
+        }
+
+        long fileSize = getFileSize("medalhas.csv");
+        char *temporaryvar = (char*) malloc (fileSize + 1);
+        if(temporaryvar == NULL){
+            perror("Erro ao alocar memória!\n");
+            fclose(medalhasCSV);
+            fclose(medalhasFile);
+            exit(1);
+        }
+
+        fread(temporaryvar, 1, fileSize, medalhasCSV);
+        fwrite(temporaryvar, 1, fileSize, medalhasFile);
+        printf("Todas as informações foram transferidas com sucesso no arquivo \"medalhas.bin\"!\n");
+
+        free(temporaryvar);
+        fclose(medalhasCSV);
     }else{
         printf("Arquivo \"%s\" carregado com sucesso!\n", "medalhas.bin");
+        fclose(medalhasFile);
     }
-
-    fclose(arq1);
 
     return 0;
 }
+
+
+
