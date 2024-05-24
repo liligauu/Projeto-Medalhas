@@ -45,7 +45,7 @@ int main(){
             exit(1);
         }
 
-        long fileSize = getFileSize("medalhas.csv");
+        long fileSize = getFileSize("medalhas.csv"); // VARIAVEL PARA ARMAZENAR TAMANHO DO ARQUIVO .CSV
         char *temporaryvar = (char*) malloc (fileSize + 1);
         if(temporaryvar == NULL){
             perror("Erro ao alocar memória!\n");
@@ -54,15 +54,16 @@ int main(){
             exit(1);
         }
 
-        fread(temporaryvar, 1, fileSize, medalhasCSV);
-        fwrite(temporaryvar, 1, fileSize, medalhasFile);
+        fread(temporaryvar, 1, fileSize, medalhasCSV); // LÊ AS INFORMAÇÕES DO ARQUIVO CSV E SALVA EM TEMPORARYVAR
+        fwrite(temporaryvar, 1, fileSize, medalhasFile); // TRANSFERE AS INFORMAÇÕES DA VARIAVEL TEMPORARIA PARA O ARQUIVO BIN
         printf("Todas as informações foram transferidas com sucesso no arquivo \"medalhas.bin\"!\n");
 
-        free(temporaryvar);
-        fclose(medalhasCSV);
+        free(temporaryvar); // LIMPA O VETOR DE TRANSFERENCIA TEMPORARIO
+        fclose(medalhasCSV); // FECHA O ARQUIVO CSV
+        fclose(medalhasFile);
     }else{
         printf("Arquivo \"%s\" carregado com sucesso!\n", "medalhas.bin");
-        fclose(medalhasFile);
+        fclose(medalhasFile); // FECHA O ARQUIVO BIN
     }
 
     return 0;
