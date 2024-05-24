@@ -12,37 +12,31 @@ deve aumentar e diminuir dinamicamente;
 
 typedef struct
 {
-    int codigo;
     char genero;
     char modalidade[30];
     char cidade[30];
-    int ano;
-    char tipo_medalha[10];
+    int ano_da_conquista;
+    char tipo_medalha;
     char nome_atleta[50];
-    char pais[20];
+    char pais_origem[3];
+    int codigo;
     //resultado
 
 } Medalha;
 
 int main(){
 
-    FILE* arq1;
+    FILE *arq1;
 
-    arq1 = fopen("../medalhas.csv", "r");
-    if(arq1 == NULL){
-        perror("Erro ao abrir arquivo!\n");
+    arq1 = fopen("medalhas.bin", "rb+");
+    if (arq1 == NULL){
+        perror("Erro ao abrir arquivo");
         exit(1);
-    }
-    int contaletras = 0;
-
-    int c;
-    while((c = getc(arq1)) != EOF){
-        contaletras++;
+    }else{
+        printf("Arquivo \"%s\" carregado com sucesso!\n", "medalhas.bin");
     }
 
+    fclose(arq1);
 
     return 0;
 }
-
-
-
