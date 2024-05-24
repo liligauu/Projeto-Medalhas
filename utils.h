@@ -1,37 +1,14 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#ifndef UTILS_H
+#define UTILS_H
 
-void LeString(char string[], int tamanho){
-    fgets(string, tamanho, stdin);
-    string[strcspn(string, "\n")] = '\0';
-    setbuf(stdin, NULL);
-}
+// Funções de Manipulação de Strings
+void LeString(char string[], int tamanho);
 
-void LimpaTela(){
-    #ifdef __Win32
-        system("cls");
-    #else
-        system("clear");
-    #endif
-}
+// Funções de Utilidade Geral
+void LimpaTela();
 
-/*void ordenarVetor(int numeros[]){
-    int tamanhovetor = (sizeof(numeros)/4);
-    int i, j, temp;
-    
-    if(true){
-        for (int i = 0; i < tamanhovetor; i++){   
-            for (int j = 0; j < tamanhovetor; j++){
-                if(numeros[j] > numeros[j+1]){
-                    temp = numeros[j];
-                    numeros[j] = numeros[j+1];
-                    numeros[j+1] = temp;
-                }
-            }
-        }
-    }else{
-    }    
-}
-*/
+// Funções de Manipulação de Vetores
+void OrdenaporDecrescente(int numeros[], int tamanhovetor);
+void OrdenaporCrescente(int numeros[], int tamanhovetor);
 
+#endif
