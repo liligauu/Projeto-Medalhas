@@ -10,6 +10,12 @@ Atleta(string), Pais Origem (string), Resultado (?). Deverá permitir cadastrar
 deve aumentar e diminuir dinamicamente;
 */
 
+typedef struct{
+    int hora;
+    int minutos;
+    float segundos;
+} Tempo; // ARMAZENA TEMPO
+
 typedef struct
 {
     char genero;
@@ -20,9 +26,15 @@ typedef struct
     char nome_atleta[50];
     char pais_origem[3];
     int codigo;
-    char resultado[10];
+    Tempo resultados;
 
-} Medalha;
+} Medalha; // STRUCT ATLETAS
+
+typedef union{
+    float distancia; // DISTANCIA
+    Tempo tempo; // TEMPO
+    float pontos; // PONTOS
+};
 
 int main(){
 
@@ -52,21 +64,19 @@ int main(){
         exit(1);
     } // ALOCAMENTO DOS JOGADORES
 
-    rewind(medalhasCSV); // RESETA PONTEIRO DE POSIÇÃO DO ARQUIVO PARA O COMEÇO
-
-    for (int i = 0; i < tamanho; i++) {
-    fscanf(medalhasCSV, " %c, %29[^,], %29[^,], %i, %c, %49[^,], %3[^,], %[^\n]",
-                &atletas[i].genero,
-                atletas[i].modalidade,
-                atletas[i].cidade,
-                &atletas[i].ano_da_conquista,
-                &atletas[i].tipo_medalha,
-                atletas[i].nome_atleta,
-                atletas[i].pais_origem,
-                atletas[i].resultado);
+    for(int i = 0; i < tamanho; i++){
+        fscanf(medalhasCSV, " %c, %29[^,], %29[^,], %i, %c, %49[^,], %3[^,], %[^\n]",
+        &atletas[i].genero,
+        atletas[i].modalidade,
+        atletas[i].cidade,
+        &atletas[i].ano_da_conquista,
+        &atletas[i].tipo_medalha,
+        atletas[i].nome_atleta,
+        atletas[i].pais_origem,
+        atletas[i].resultado);
     }
 
-    for (int i = 0; i < tamanho; i++) {
+    for (int i = 0; i < tamanho; i++){
         printf("%c, %s, %s, %d, %c, %s, %s, %s\n",
                atletas[i].genero,
                atletas[i].modalidade,
@@ -77,7 +87,9 @@ int main(){
                atletas[i].pais_origem,
                atletas[i].resultado);
     }
-    
+
+
+
     free(atletas);
 
     return 0;
