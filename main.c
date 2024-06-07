@@ -20,14 +20,71 @@ typedef struct
     char nome_atleta[50];
     char pais_origem[3];
     int codigo;
-    //resultado
+    char resultado[10];
 
 } Medalha;
 
 int main(){
 
-    FILE *medalhasFile;
+    int c; 
+    int tamanho = 0;
     FILE *medalhasCSV;
+    medalhasCSV = fopen("medalhas.csv", "r+");
+    if(medalhasCSV == NULL){
+        perror("Erro ao abrir arquivo \"medalhas.csv\"!\n\n");
+        exit(1);
+    }
+
+    while((c = getc(medalhasCSV)) != EOF){
+        if(c == '\n'){
+            tamanho++; // VERIFICA O TANTO DE LINHAS(ATLETAS);
+        }
+    } tamanho++;
+
+    rewind(medalhasCSV); // VOLTA O PONTEIRO DO ARQUIVO PARA O INICIO
+
+    printf("Jogadores: %i\n", tamanho); // APAGAR
+
+    Medalha* atletas = (Medalha*) malloc (tamanho * sizeof(Medalha));
+    if(atletas == NULL){
+        perror("Erro ao alocar memória dos \"atletas\"!");
+        fclose(medalhasCSV);
+        exit(1);
+    } // ALOCAMENTO DOS JOGADORES
+
+    rewind(medalhasCSV); // RESETA PONTEIRO DE POSIÇÃO DO ARQUIVO PARA O COMEÇO
+
+    for (int i = 0; i < tamanho; i++) {
+    fscanf(medalhasCSV, " %c, %29[^,], %29[^,], %i, %c, %49[^,], %3[^,], %[^\n]",
+                &atletas[i].genero,
+                atletas[i].modalidade,
+                atletas[i].cidade,
+                &atletas[i].ano_da_conquista,
+                &atletas[i].tipo_medalha,
+                atletas[i].nome_atleta,
+                atletas[i].pais_origem,
+                atletas[i].resultado);
+    }
+
+    for (int i = 0; i < tamanho; i++) {
+        printf("%c, %s, %s, %d, %c, %s, %s, %s\n",
+               atletas[i].genero,
+               atletas[i].modalidade,
+               atletas[i].cidade,
+               atletas[i].ano_da_conquista,
+               atletas[i].tipo_medalha,
+               atletas[i].nome_atleta,
+               atletas[i].pais_origem,
+               atletas[i].resultado);
+    }
+    
+    free(atletas);
+
+    return 0;
+}
+
+/* CRIA MEDALS BIN
+    FILE *medalhasFile;
 
     medalhasFile = fopen("medalhas.bin", "rb");
     if (medalhasFile == NULL){
@@ -45,8 +102,9 @@ int main(){
             exit(1);
         }
 
-        long fileSize = getFileSize("medalhas.csv"); // VARIAVEL PARA ARMAZENAR TAMANHO DO ARQUIVO .CSV
+        long fileSize = getFileSize("medalhas.csv");
         char *temporaryvar = (char*) malloc (fileSize + 1);
+
         if(temporaryvar == NULL){
             perror("Erro ao alocar memória!\n");
             fclose(medalhasCSV);
@@ -54,20 +112,17 @@ int main(){
             exit(1);
         }
 
-        fread(temporaryvar, 1, fileSize, medalhasCSV); // LÊ AS INFORMAÇÕES DO ARQUIVO CSV E SALVA EM TEMPORARYVAR
-        fwrite(temporaryvar, 1, fileSize, medalhasFile); // TRANSFERE AS INFORMAÇÕES DA VARIAVEL TEMPORARIA PARA O ARQUIVO BIN
+        fread(temporaryvar, 1, fileSize, medalhasCSV);
+        fwrite(temporaryvar, 1, fileSize, medalhasFile);
         printf("Todas as informações foram transferidas com sucesso no arquivo \"medalhas.bin\"!\n");
 
-        free(temporaryvar); // LIMPA O VETOR DE TRANSFERENCIA TEMPORARIO
-        fclose(medalhasCSV); // FECHA O ARQUIVO CSV
+        free(temporaryvar);
+        fclose(medalhasCSV);
         fclose(medalhasFile);
     }else{
         printf("Arquivo \"%s\" carregado com sucesso!\n", "medalhas.bin");
-        fclose(medalhasFile); // FECHA O ARQUIVO BIN
+        fclose(medalhasFile);
     }
-
-    return 0;
-}
-
+*/
 
 

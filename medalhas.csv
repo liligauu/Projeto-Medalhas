@@ -152,9 +152,9 @@ M,100M Men,Athens,1896,B,Francis LANE,USA,12.6
 M,110M Hurdles Men,Rio,2016,G,Omar MCLEOD,JAM,13.05
 M,110M Hurdles Men,Rio,2016,S,Orlando ORTEGA,ESP,13.17
 M,110M Hurdles Men,Rio,2016,B,Dimitri BASCOU,FRA,13.24
-M,110M Hurdles Men,Beijing,2008,G,Dayron ROBLES,CUB,12.93,+0.1
-M,110M Hurdles Men,Beijing,2008,S,David PAYNE,USA,13.17,+0.1
-M,110M Hurdles Men,Beijing,2008,B,David OLIVER,USA,13.18,+0.1
+M,110M Hurdles Men,Beijing,2008,G,Dayron ROBLES,CUB,13.03
+M,110M Hurdles Men,Beijing,2008,S,David PAYNE,USA,13.27,+0.1
+M,110M Hurdles Men,Beijing,2008,B,David OLIVER,USA,13.28,+0.1
 M,110M Hurdles Men,Sydney,2000,G,Anier GARCIA,CUB,13.0
 M,110M Hurdles Men,Sydney,2000,S,Terrence TRAMMELL,USA,13.16
 M,110M Hurdles Men,Sydney,2000,B,Mark CREAR,USA,13.22
@@ -2391,4 +2391,4 @@ W,Triple Jump Women,Athens,2004,S,Hrysopiyi DEVETZI,GRE,15.25
 W,Triple Jump Women,Athens,2004,B,Tatyana LEBEDEVA,RUS,15.14
 W,Triple Jump Women,Atlanta,1996,G,Inessa KRAVETS,UKR,15.33
 W,Triple Jump Women,Atlanta,1996,S,Inna LASOVSKAYA,RUS,14.98
-W,Triple Jump Women,Atlanta,1996,B,Sarka KASPARKOVA,CZE,14.98
+W,Triple Jump Women,Atlanta,1996,B,Sarka KASPARKOVA,CZE,14.98,+0.1
