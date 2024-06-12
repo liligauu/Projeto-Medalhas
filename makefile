@@ -8,7 +8,8 @@ main.o: main.c
 
 clean: 
 	@echo "Apagando objetos e executáveis antigos..."
-	rm -f *.o main
+#	rm -f *.o main
+	del /f *.o
 
 run: 
 	./main

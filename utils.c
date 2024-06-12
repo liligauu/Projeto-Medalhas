@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <time.h>
 #include "utils.h"
+#include "arquivos.h"
+#include "funcoes.h"
 
 void LeString(char string[], int tamanho){
     fgets(string, tamanho, stdin);
