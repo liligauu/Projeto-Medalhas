@@ -24,8 +24,10 @@ int main() {
     FILE* binorcsv = fopen("medalhas.bin", "rb");
     if(binorcsv == NULL){
         tamanho = ContaLinhas("medalhas.csv");
+        printf("Tamanho CSV: %i\n", tamanho);
     }else{
         tamanho = getFileSize("medalhas.bin")/sizeof(Medalha);
+        printf("Tamanho Bin: %i\n", tamanho);
     }
 
     Medalha* atletas = (Medalha*) malloc (tamanho * sizeof(Medalha));
@@ -45,6 +47,7 @@ int main() {
         printf("5- Excluir jogadores\n");
         printf("6- Excluir Medalhas\n");
         printf("7- Tabela de medalhas\n");
+        printf("8- Exportar para CSV\n");
         printf("0 - Sair do programa\n");
         printf("Opcao: ");
 
@@ -79,6 +82,10 @@ int main() {
         case 7:
             LimpaTela();
             TabelaDeMedalhas(atletas, tamanho);
+            break;
+        case 8:
+            LimpaTela();
+            ExportaCSV(atletas, tamanho);
             break;
         case 0:
             LimpaTela();

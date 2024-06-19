@@ -4,6 +4,32 @@
 #include "utils.h"
 #include "myatletas.h"
 
+// Função que ordena os jogadores de acordo com o ano da edição usando Bubble Sort
+void OrdenaPorAno(Medalha* jogador, int tamanho){
+    for (int i = 0; i < tamanho - 1; i++) {
+        for (int j = 0; j < tamanho - i - 1; j++) {
+            if (jogador[j].ano_da_conquista < jogador[j + 1].ano_da_conquista){
+                Medalha temp = jogador[j];
+                jogador[j] = jogador[j + 1];
+                jogador[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Função que ordena os jogadores de acordo com a modalidade usando Bubble Sort
+void OrdenaPorModalidade(Medalha* jogador, int tamanho){
+    for (int i = 0; i < tamanho - 1; i++) {
+        for (int j = 0; j < tamanho - i - 1; j++) {
+            if (strcmp(jogador[j].modalidade, jogador[j + 1].modalidade) > 0) {
+                Medalha temp = jogador[j];
+                jogador[j] = jogador[j + 1];
+                jogador[j + 1] = temp;
+            }
+        }
+    }
+}
+
 int ContaLinhas(const char* nomearquivo){
 
     FILE* arquivos = fopen(nomearquivo, "r+");
@@ -52,7 +78,6 @@ void SalvaAtletas(Medalha* jogador, int tamanho){
                 break; // Termina o loop se achar erro na leitura
             }
 
-            jogador[i].codigo = i+1;
 
             // Zera os valores invalidos (none)
             if (strcmp(resultadoTipo, "None") == 0) {
@@ -103,17 +128,23 @@ void SalvaAtletas(Medalha* jogador, int tamanho){
             }
         }
 
+        OrdenaPorAno(jogador, tamanho);
+        OrdenaPorModalidade(jogador, tamanho);
+
         fclose(arquivocsv);
     }else{
         printf("Abrindo arquivo binário!\n");
         long fileSize = getFileSize("medalhas.bin");
         fread(jogador, 1, fileSize, arquivobin);
+        OrdenaPorAno(jogador, tamanho);
+        OrdenaPorModalidade(jogador, tamanho);
     }
 
     printf("Os jogadores foram salvos com sucesso!\n");
 }
 
 void ListaAtletas(Medalha* jogador, int tamanho){
+
     for(int i = 0; i < tamanho; i++){
         printf("Atleta %d: ", jogador[i].codigo);
         printf("%c, ", jogador[i].genero);
@@ -123,7 +154,11 @@ void ListaAtletas(Medalha* jogador, int tamanho){
         printf("%c, ", jogador[i].tipo_medalha);
         printf("%s, ", jogador[i].nome_atleta);
         printf("%s, ", jogador[i].pais_origem);
-        
+
+        for (int i = 0; i < tamanho; i++){            
+            jogador[i].codigo = i + 1;
+        }
+
         // Verificar o tipo de resultado e imprimir de acordo com a modalidade
         if(strcmp(jogador[i].modalidade, "100M Men") == 0 || 
             strcmp(jogador[i].modalidade, "110M Hurdles Men") == 0 ||
@@ -209,5 +244,5 @@ void SalvaBinario(Medalha* atletas, int tamanho){
         fwrite(atletas, sizeof(Medalha), tamanho, medalhasFile);
         printf("Todas as informações foram transferidas com sucesso no arquivo \"medalhas.bin\"!\n");
 
-        fclose(medalhasFile);
+    fclose(medalhasFile);
 }

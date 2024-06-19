@@ -354,6 +354,7 @@ void PesquisarJogador(Medalha* jogador, int tamanho){
             printf("Tipo de medalha: %c\n", jogador[i].tipo_medalha);
             printf("Gênero: %c\n", jogador[i].genero);
             printf("País de origem: %s\n", jogador[i].pais_origem);
+            printf("Codigo: %i\n", jogador[i].codigo);
 
             if(jogador[i].resultado.distancia){
                 printf("Resultado: %.2f\n\n", jogador[i].resultado.distancia);
@@ -523,19 +524,19 @@ void ExcluirMedalha(Medalha* jogador, int tamanho){
 
 }
 
-void TabelaDeMedalhas(Medalha* jogador, int tamanho) {
+void TabelaDeMedalhas(Medalha* jogador, int tamanho){
   
     int contagempais = 0;
     int contador = 100;
     int totalmedals = 0;
 
     Medals* medalsrank = (Medals*) malloc(contador * sizeof(Medals));
-    if (medalsrank == NULL) {
+    if (medalsrank == NULL){
         perror("Erro ao alocar memória para medalsrank!\n");
         exit(1);
     }
 
-    for (int i = 0; i < contador; i++) {
+    for (int i = 0; i < contador; i++){
         medalsrank[i].gold = 0;
         medalsrank[i].silver = 0;
         medalsrank[i].bronze = 0;
@@ -600,4 +601,79 @@ void TabelaDeMedalhas(Medalha* jogador, int tamanho) {
 
     free(medalsrank);
     printf("\n");
+}
+
+void ExportaCSV(Medalha* atletas, int tamanho){
+
+    int opcao;
+
+    FILE* archivecsv;
+
+    archivecsv = fopen("medalhas.csv", "r");
+    if(archivecsv == NULL){
+        perror("Erro ao ler arquivo csv!\n");
+        exit(1);
+    }else{
+        printf("O arquivo medalhas.csv já existe!\n");
+        do{
+            printf("1- Sobrescrever dados\n2- Retornar ao menu!\n");
+            printf("Opcao: ");
+            scanf("%i", &opcao);
+            setbuf(stdin, NULL);
+        }while(opcao < 1 || opcao > 2);
+
+        if(opcao == 1){
+            archivecsv = fopen("medalhas.csv", "w");
+            if(archivecsv == NULL){
+                perror("Erro ao alocar memória!\n");
+                exit(1);
+            }
+            printf("Exportando dados para arquivo \"medalhas.csv\"!\n");
+
+
+            for (int i = 0; i < tamanho; i++){
+                fprintf(archivecsv, "%c,%s,%s,%d,%c,%s,%s",
+                    atletas[i].genero,
+                    atletas[i].modalidade,
+                    atletas[i].cidade,
+                    atletas[i].ano_da_conquista,
+                    atletas[i].tipo_medalha,
+                    atletas[i].nome_atleta,
+                    atletas[i].pais_origem
+                );
+
+                if(i == tamanho-1){
+                    if(atletas[i].resultado.distancia){
+                        fprintf(archivecsv, ",%.2f", atletas[i].resultado.distancia);
+                    }else if(atletas[i].resultado.tempo.segundos && atletas[i].resultado.tempo.minutos == 0 && atletas[i].resultado.tempo.hora == 0) {
+                        fprintf(archivecsv, ",%.2f", atletas[i].resultado.tempo.segundos);
+                    }else if(atletas[i].resultado.tempo.segundos && atletas[i].resultado.tempo.minutos && atletas[i].resultado.tempo.hora) {
+                        fprintf(archivecsv, ",%d:%d:%.2f", atletas[i].resultado.tempo.hora, atletas[i].resultado.tempo.minutos, atletas[i].resultado.tempo.segundos);
+                    }else if(atletas[i].resultado.tempo.segundos && atletas[i].resultado.tempo.minutos && atletas[i].resultado.tempo.hora == 0) {
+                        fprintf(archivecsv, ",%d:%.2f", atletas[i].resultado.tempo.minutos, atletas[i].resultado.tempo.segundos);
+                    }else{
+                        fprintf(archivecsv, ", None");
+                    }
+                }else{
+                    if(atletas[i].resultado.distancia){
+                        fprintf(archivecsv, ",%.2f\n", atletas[i].resultado.distancia);
+                    }else if(atletas[i].resultado.tempo.segundos && atletas[i].resultado.tempo.minutos == 0 && atletas[i].resultado.tempo.hora == 0) {
+                        fprintf(archivecsv, ",%.2f\n", atletas[i].resultado.tempo.segundos);
+                    }else if(atletas[i].resultado.tempo.segundos && atletas[i].resultado.tempo.minutos && atletas[i].resultado.tempo.hora) {
+                        fprintf(archivecsv, ",%d:%d:%.2f\n", atletas[i].resultado.tempo.hora, atletas[i].resultado.tempo.minutos, atletas[i].resultado.tempo.segundos);
+                    }else if(atletas[i].resultado.tempo.segundos && atletas[i].resultado.tempo.minutos && atletas[i].resultado.tempo.hora == 0) {
+                        fprintf(archivecsv, ",%d:%.2f\n", atletas[i].resultado.tempo.minutos, atletas[i].resultado.tempo.segundos);
+                    }else{
+                        fprintf(archivecsv, ", None\n");
+                    }
+                }
+            }
+        } else if(opcao == 2){
+            printf("Ok! Retornando...\n");
+            return;
+        }
+    }
+
+    printf("Os dados foram salvos com sucesso em \"medalhas.csv\"!\n");
+    fclose(archivecsv);
 }

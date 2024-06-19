@@ -22,4 +22,6 @@ void ExcluirMedalha(Medalha* jogador, int tamanho); // DELETA MEDALHA
 
 void TabelaDeMedalhas(Medalha* jogador, int tamanho); // TABELA DE MEDALHAS
 
+void ExportaCSV(Medalha* atletas, int tamanho); // EXPORTA PARA ARQUIVO CSV
+
 #endif //FUNCOES.H
